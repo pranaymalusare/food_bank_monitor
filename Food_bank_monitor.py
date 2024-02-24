@@ -40,6 +40,7 @@ def check_food_bank_open():
                         send_email()
                         return  
             else:
+                send_email()
                 print("No slots available at the moment.")
             time.sleep(60)  # Wait 60 seconds before checking again
 
