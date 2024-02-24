@@ -2,32 +2,40 @@ name: Schedule Python Script
 
 on:
   schedule:
-    - cron: '0 13 * * 1-5'  
-    - cron: '0 14 * * 1-5'  
-    - cron: '0 15 * * 1-5'  
-    - cron: '0 16 * * 1-5'  
+    - cron: '0 13 * * 1-5'
+    - cron: '0 14 * * 1-5'
+    - cron: '0 15 * * 1-5'
+    - cron: '0 16 * * 1-5'
   workflow_dispatch:
+
 jobs:
   run-script:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.12'  
-    - name: Install dependencies
+        python-version: '3.12'
+
+    - name: Install Chrome and ChromeDriver
       run: |
         set -x
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
         CHROME_VERSION=$(google-chrome --version | grep -oE "[0-9\.]{2,}" | head -1)
         CHROMEDRIVER_VERSION=$(wget -qO- "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+        if [ -z "$CHROMEDRIVER_VERSION" ]; then
+          echo "Failed to get CHROMEDRIVER_VERSION"
+          exit 1
+        fi
         wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/bin/chromedriver
         sudo chmod +x /usr/bin/chromedriver
+
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
@@ -35,7 +43,7 @@ jobs:
 
     - name: Run script
       run: python food_bank_monitor.py
-      env:  # Define your environment variables here
+      env:
         MY_EMAIL: ${{ secrets.MY_EMAIL }}
         MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
-        MY_RECEIVER: ${{secrets.MY_RECEIVER}}
+        MY_RECEIVER: ${{ secrets.MY_RECEIVER }}
