@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 import time
 import yagmail
 import os
+import datetime
+
 
 def send_email():
     sender = os.getenv('MY_EMAIL')
@@ -21,6 +23,7 @@ def send_email():
 
 def check_food_bank_open():
     url = 'https://outlook.office365.com/owa/calendar/SMUCommunityFoodRoom@smuhalifax.onmicrosoft.com/bookings/'
+    end_time = datetime.datetime.now() + datetime.timedelta(hours=3)
 
     try:
         options = Options()
@@ -28,22 +31,23 @@ def check_food_bank_open():
         driver = webdriver.Chrome(options=options)
         driver.get(url)
 
-        while True:
+        while datetime.datetime.now() < end_time: 
             dates = driver.find_elements(By.XPATH, "//div[@class='date circle']")
-            if dates:  # Check if date elements are present
+            if dates:
                 for date in dates:
                     if "bookable" in date.get_attribute("class"):
                         print(f"Bookable date found: {date.text}")
                         send_email()
+                        return  
             else:
                 print("No slots available at the moment.")
-
-            time.sleep(60)  # Check every minute
+            time.sleep(60)  # Wait 60 seconds before checking again
 
     except Exception as e:
         print(f"Error checking the site: {e}")
     finally:
         driver.quit()
+
 
 if __name__ == '__main__':
     check_food_bank_open()
