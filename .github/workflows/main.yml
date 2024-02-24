@@ -26,3 +26,4 @@ jobs:
       env:  # Define your environment variables here
         MY_EMAIL: ${{ secrets.MY_EMAIL }}
         MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
+        MY_RECEIVER: ${{secrets.MY_RECEIVER}}
