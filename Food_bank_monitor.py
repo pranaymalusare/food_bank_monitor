@@ -6,8 +6,8 @@ import yagmail
 import os
 
 def send_email():
-    sender = os.getenv('MY_EMAIL')
-    password = os.getenv('MY_PASSWORD')
+    sender = os.getenv(MY_EMAIL)
+    password = os.getenv(MY_PASSWORD)
     receiver = 'malusarepra@gmail.com'  
     subject = 'Food Bank Booking Open!'
     body = 'The food bank booking is now open. Visit the site to book.'
