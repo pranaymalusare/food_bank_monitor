@@ -19,6 +19,7 @@ jobs:
         python-version: '3.12'  
     - name: Install dependencies
       run: |
+        set -x
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
         CHROME_VERSION=$(google-chrome --version | grep -oE "[0-9\.]{2,}" | head -1)
