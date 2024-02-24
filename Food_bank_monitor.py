@@ -6,12 +6,12 @@ import yagmail
 import os
 
 def send_email():
-    sender = os.getenv(MY_EMAIL)
-    password = os.getenv(MY_PASSWORD)
-    receiver = os.getenv(MY_RECEIVER)  
+    sender = os.getenv('MY_EMAIL')
+    password = os.getenv('MY_PASSWORD')
+    receiver = os.getenv('MY_RECEIVER')  
     subject = 'Food Bank Booking Open!'
     body = 'The food bank booking is now open. Visit the site to book.'
-    yag = yagmail.SMTP(user=sender, password=MY_PASSWORD)
+    yag = yagmail.SMTP(user=sender, password=password)
 
     try:
         yag.send(to=receiver, subject=subject, contents=body)
