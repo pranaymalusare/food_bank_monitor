@@ -2,10 +2,10 @@ name: Schedule Python Script
 
 on:
   schedule:
-    - cron: '0 13 * * 1-5'  # At 09:00 AM Atlantic Standard Time (UTC-4), Monday to Friday
-    - cron: '0 14 * * 1-5'  # At 10:00 AM Atlantic Standard Time (UTC-4), Monday to Friday
-    - cron: '0 15 * * 1-5'  # At 11:00 AM Atlantic Standard Time (UTC-4), Monday to Friday
-    - cron: '0 16 * * 1-5'  # At 12:00 PM Atlantic Standard Time (UTC-4), Monday to Friday
+    - cron: '0 13 * * 1-5'  
+    - cron: '0 14 * * 1-5'  
+    - cron: '0 15 * * 1-5'  
+    - cron: '0 16 * * 1-5'  
 
 jobs:
   run-script:
@@ -16,10 +16,10 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.x'  # Set up the Python version you need
+        python-version: '3.12'  
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install selenium  # Add any other dependencies
+        pip install selenium  
     - name: Run script
       run: python food_bank_monitor.py
