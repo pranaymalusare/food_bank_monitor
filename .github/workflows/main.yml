@@ -23,3 +23,6 @@ jobs:
         pip install selenium  
     - name: Run script
       run: python food_bank_monitor.py
+      env:  # Define your environment variables here
+        MY_EMAIL: ${{ secrets.MY_EMAIL }}
+        MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
