@@ -19,8 +19,19 @@ jobs:
         python-version: '3.12'  
     - name: Install dependencies
       run: |
+        sudo apt-get update
+        sudo apt-get install -y google-chrome-stable
+        CHROME_VERSION=$(google-chrome --version | grep -oE "[0-9\.]{2,}" | head -1)
+        CHROMEDRIVER_VERSION=$(wget -qO- "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+        wget -q "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/bin/chromedriver
+        sudo chmod +x /usr/bin/chromedriver
+    - name: Install dependencies
+      run: |
         python -m pip install --upgrade pip
-        pip install selenium  
+        pip install selenium yagmail
+
     - name: Run script
       run: python food_bank_monitor.py
       env:  # Define your environment variables here
