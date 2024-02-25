@@ -24,7 +24,7 @@ def send_email():
 def check_food_bank_open():
     url = 'https://outlook.office365.com/owa/calendar/SMUCommunityFoodRoom@smuhalifax.onmicrosoft.com/bookings/'
     end_time = datetime.datetime.now() + datetime.timedelta(hours=3)
-
+    driver = None
     try:
         options = Options()
         options.headless = True
@@ -47,7 +47,8 @@ def check_food_bank_open():
     except Exception as e:
         print(f"Error checking the site: {e}")
     finally:
-        driver.quit()
+        if driver:
+            driver.quit()
 
 
 if __name__ == '__main__':
