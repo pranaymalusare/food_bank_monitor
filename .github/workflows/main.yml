@@ -37,7 +37,7 @@ jobs:
         pip install selenium yagmail
 
     - name: Run script
-      run: python food_bank_monitor.py
+      run: python Food_bank_monitor.py
       env:
         MY_EMAIL: ${{ secrets.MY_EMAIL }}
         MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
